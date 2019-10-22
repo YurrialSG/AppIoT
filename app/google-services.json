@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "659953019990",
+    "firebase_url": "https://appiot-30f63.firebaseio.com",
+    "project_id": "appiot-30f63",
+    "storage_bucket": "appiot-30f63.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:659953019990:android:ac4b6ff06a4321cee15ff7",
+        "android_client_info": {
+          "package_name": "com.example.appiot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "659953019990-tfj8v6sg7nnkkmgkkkpu93qh69fibblg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.appiot",
+            "certificate_hash": "f6f153a9f71f4a8e89876799f27867777b20cbab"
+          }
+        },
+        {
+          "client_id": "659953019990-8bjj1up6amtbggmlq84q1v1u5378p56o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCazA3RJvNPeBiRakpOd9y8mxsBvGXArm4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "659953019990-8bjj1up6amtbggmlq84q1v1u5378p56o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
