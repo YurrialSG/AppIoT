@@ -59,11 +59,10 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/btnQRCode"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_gravity="center_horizontal"
             app:cardBackgroundColor="@android:color/holo_blue_dark"
-            app:cardCornerRadius="10dp"
             android:layout_marginTop="20dp"
             >
 
@@ -87,9 +86,9 @@
         <ViewFlipper
             android:id="@+id/v_flipper"
             android:layout_width="match_parent"
-            android:layout_marginTop="120dp"
-            android:layout_marginRight="60dp"
-            android:layout_marginLeft="60dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginBottom="80dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
