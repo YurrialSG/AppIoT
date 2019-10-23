@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg"
+    tools:context=".SearchActivity">
+
+    <RelativeLayout
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <TextView
+            android:id="@+id/txtLogout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="LOGOUT "
+            android:padding="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:gravity="right"
+            />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/logo"
+            android:padding="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            />
+
+    </RelativeLayout>
+
+    <GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:columnOrderPreserved="false"
+        android:columnCount="1"
+        android:rowCount="8"
+        android:alignmentMode="alignMargins"
+        android:layout_weight="8"
+        >
+
+        <!-- Linha 1 -->
+        <!-- Coluna 1 -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnLed01"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            app:cardElevation="8dp"
+            >
+
+
+        </androidx.cardview.widget.CardView>
+
+    </GridLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@android:color/white"
+            app:menu="@menu/bottom_navigation" />
+
+    </FrameLayout>
+
+</LinearLayout>

@@ -1,8 +1,11 @@
 package com.example.appiot;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,7 +17,10 @@ import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
@@ -25,6 +31,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -80,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
     TextView txtLoading;
 
     GridLayout gridLayout;
+    BottomNavigationView bottomNavigation;
 
     //Telas utilizadas
     Intent loginActivity;
@@ -87,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout mainActivity;
 
     ProgressBar progressBar;
-    int i = 0;
+    //int i = 0;
 
     private FirebaseAuth auth;
     private FirebaseUser user;
@@ -103,11 +111,11 @@ public class MainActivity extends AppCompatActivity {
 
         acoesNotConnected();
 
-        progressBar.setMax(100);
-        progressBar.setProgress(i);
+        //progressBar.setMax(100);
+        //progressBar.setProgress(i);
 
         String clientId = MqttClient.generateClientId();
-        client = new MqttAndroidClient(MainActivity.this, MqttHost, clientId);
+        client = new MqttAndroidClient(this, MqttHost, clientId);
 
         try {
             MqttConnectOptions options = new MqttConnectOptions();
@@ -119,10 +127,10 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     try {
-                        while (i != 100) {
-                            progressBar.setProgress(i);
-                            sleep(100);
-                            i++;
+                        //while (i != 100) {
+                            //progressBar.setProgress(i);
+                            //sleep(100);
+                            //i++;
                             token.setActionCallback(new IMqttActionListener() {
                                 @Override
                                 public void onSuccess(IMqttToken asyncActionToken) {
@@ -137,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             });
                             //client.subscribe("yuriinternacional86@gmail.com/temperatura/", 1);
-                        }
+                        //}
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -164,15 +172,16 @@ public class MainActivity extends AppCompatActivity {
         txtTemp.setVisibility(View.INVISIBLE);
         txtUser.setVisibility(View.INVISIBLE);
         gridLayout.setVisibility(View.INVISIBLE);
+        bottomNavigation.setVisibility(View.INVISIBLE);
         txtLoading.setVisibility(View.VISIBLE);
-        progressBar.setVisibility(View.VISIBLE);
-        mainActivity.setBackground(ContextCompat.getDrawable(this, R.drawable.bg2));
+        //progressBar.setVisibility(View.VISIBLE);
+        //mainActivity.setBackground(ContextCompat.getDrawable(this, R.drawable.bg2));
     }
 
     public void acoesConnected() {
         // We are connected
-        progressBar.setProgress(100);
-        i = 100;
+        //progressBar.setProgress(100);
+        //i = 100;
         Toast.makeText(MainActivity.this, "Connected", Toast.LENGTH_SHORT).show();
         //deixar componentes visible
         txtLogout.setVisibility(View.VISIBLE);
@@ -182,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
         txtTemp.setVisibility(View.VISIBLE);
         txtUser.setVisibility(View.VISIBLE);
         gridLayout.setVisibility(View.VISIBLE);
+        bottomNavigation.setVisibility(View.VISIBLE);
         txtLoading.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
         btnLed01.setEnabled(true);
@@ -203,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
         subscribeMqttChannel("yuriinternacional86@gmail.com/temperatura/");
         mainActivity.setBackground(ContextCompat.getDrawable(this, R.drawable.bg));
         acoesBotoes();
+        acoesNavigation();
     }
 
     public void acoesBotoes() {
@@ -342,12 +353,51 @@ public class MainActivity extends AppCompatActivity {
         txtLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Conexao.logOut();
-                startActivity(loginActivity);
-                finish();
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                alertDialog.setMessage("Deseja sair do app?");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "SIM",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                Conexao.logOut();
+                                startActivity(loginActivity);
+                                finish();
+                            }
+                        });
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NÃO",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
             }
         });
 
+    }
+
+    private void acoesNavigation() {
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottomNavigation);
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        break;
+                    case R.id.nav_qrcode:
+                        Intent a = new Intent(MainActivity.this, QRCodeActivity.class);
+                        startActivity(a);
+                        finish();
+                        break;
+                    case R.id.nav_search:
+                        Intent b = new Intent(MainActivity.this, SearchActivity.class);
+                        startActivity(b);
+                        finish();
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
 
@@ -374,6 +424,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         gridLayout = (GridLayout) findViewById(R.id.gridLayout);
         mainActivity = (LinearLayout) findViewById(R.id.mainActivity);
+        bottomNavigation = (BottomNavigationView) findViewById(R.id.bottomNavigation);
     }
 
     public void enviarMqttLigaLed(String msg, CardView btnOn, String acao, String posicao) {
